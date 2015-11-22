@@ -1,10 +1,10 @@
-I don't understand what to do about this assignment. So all I do for this assignment is copy the example codes and change some variable names and functions.
+I don't understand what to do about this assignment. So all I do for this assignment is copying the example codes and change some variable names and functions.
 
 In my opinion, this assignment is to ask the concept of lexical scoping. So I attached comment about how the lexical scoping is used in my code.
 
-And here I test my code.
+And here I am testing my code.
 
-## s is a list(s) containing 2 lists each for 10 2by2 matrices of x and i.
+## s is a list containing 2 lists each for 10 2by2 matrices of x and i.
 > ## x is the list of input matrices for makeCacheMatrix and i is the list of computed inverse matrices. 
 > x <- vector("list", 10)
 
