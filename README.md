@@ -1,105 +1,158 @@
-### Introduction
+I don't understand what to do about this assignment. So all I do for this assignment is copy the example codes and change some variable names and functions.
 
-This second programming assignment will require you to write an R
-function that is able to cache potentially time-consuming computations.
-For example, taking the mean of a numeric vector is typically a fast
-operation. However, for a very long vector, it may take too long to
-compute the mean, especially if it has to be computed repeatedly (e.g.
-in a loop). If the contents of a vector are not changing, it may make
-sense to cache the value of the mean so that when we need it again, it
-can be looked up in the cache rather than recomputed. In this
-Programming Assignment you will take advantage of the scoping rules of
-the R language and how they can be manipulated to preserve state inside
-of an R object.
+In my opinion, this assignment is to ask the concept of lexical scoping. So I attached comment about how the lexical scoping is used in my code.
 
-### Example: Caching the Mean of a Vector
+And here I test my code.
 
-In this example we introduce the `<<-` operator which can be used to
-assign a value to an object in an environment that is different from the
-current environment. Below are two functions that are used to create a
-special object that stores a numeric vector and caches its mean.
 
-The first function, `makeVector` creates a special "vector", which is
-really a list containing a function to
+> ## to make a list(s) containing 2 lists each for 10 2by2 matrices of x and i
+> x <- vector("list", 10)
+> i <- vector("list", 10)
+> for (k in seq_along(x)) {
++     x[[k]] <- matrix(runif(4, 1, 10), nrow = 2)
++ }
+> s <- list(x = x, i = i)
+> s
+$x
+$x[[1]]
+         [,1]     [,2]
+[1,] 7.325061 1.060820
+[2,] 2.875197 1.683723
 
-1.  set the value of the vector
-2.  get the value of the vector
-3.  set the value of the mean
-4.  get the value of the mean
+$x[[2]]
+         [,1]     [,2]
+[1,] 2.070225 7.715990
+[2,] 4.227629 1.313658
 
-<!-- -->
+$x[[3]]
+         [,1]     [,2]
+[1,] 7.469959 1.227441
+[2,] 6.411591 6.857019
 
-    makeVector <- function(x = numeric()) {
-            m <- NULL
-            set <- function(y) {
-                    x <<- y
-                    m <<- NULL
-            }
-            get <- function() x
-            setmean <- function(mean) m <<- mean
-            getmean <- function() m
-            list(set = set, get = get,
-                 setmean = setmean,
-                 getmean = getmean)
-    }
+$x[[4]]
+         [,1]     [,2]
+[1,] 5.340915 8.947644
+[2,] 4.782291 3.262819
 
-The following function calculates the mean of the special "vector"
-created with the above function. However, it first checks to see if the
-mean has already been calculated. If so, it `get`s the mean from the
-cache and skips the computation. Otherwise, it calculates the mean of
-the data and sets the value of the mean in the cache via the `setmean`
-function.
+$x[[5]]
+         [,1]     [,2]
+[1,] 6.072657 6.181755
+[2,] 5.510226 8.937571
 
-    cachemean <- function(x, ...) {
-            m <- x$getmean()
-            if(!is.null(m)) {
-                    message("getting cached data")
-                    return(m)
-            }
-            data <- x$get()
-            m <- mean(data, ...)
-            x$setmean(m)
-            m
-    }
+$x[[6]]
+         [,1]     [,2]
+[1,] 3.198564 2.023905
+[2,] 5.880390 7.327128
 
-### Assignment: Caching the Inverse of a Matrix
+$x[[7]]
+         [,1]     [,2]
+[1,] 9.742089 4.423466
+[2,] 7.342432 3.989256
 
-Matrix inversion is usually a costly computation and there may be some
-benefit to caching the inverse of a matrix rather than computing it
-repeatedly (there are also alternatives to matrix inversion that we will
-not discuss here). Your assignment is to write a pair of functions that
-cache the inverse of a matrix.
+$x[[8]]
+         [,1]     [,2]
+[1,] 8.149034 6.790976
+[2,] 5.994971 7.640640
 
-Write the following functions:
+$x[[9]]
+         [,1]     [,2]
+[1,] 8.261066 5.370911
+[2,] 4.910523 4.591207
 
-1.  `makeCacheMatrix`: This function creates a special "matrix" object
-    that can cache its inverse.
-2.  `cacheSolve`: This function computes the inverse of the special
-    "matrix" returned by `makeCacheMatrix` above. If the inverse has
-    already been calculated (and the matrix has not changed), then
-    `cacheSolve` should retrieve the inverse from the cache.
+$x[[10]]
+         [,1]     [,2]
+[1,] 7.728086 7.810274
+[2,] 1.684318 4.032944
 
-Computing the inverse of a square matrix can be done with the `solve`
-function in R. For example, if `X` is a square invertible matrix, then
-`solve(X)` returns its inverse.
 
-For this assignment, assume that the matrix supplied is always
-invertible.
+$i
+$i[[1]]
+NULL
 
-In order to complete this assignment, you must do the following:
+$i[[2]]
+NULL
 
-1.  Fork the GitHub repository containing the stub R files at
-    [https://github.com/rdpeng/ProgrammingAssignment2](https://github.com/rdpeng/ProgrammingAssignment2)
-    to create a copy under your own account.
-2.  Clone your forked GitHub repository to your computer so that you can
-    edit the files locally on your own machine.
-3.  Edit the R file contained in the git repository and place your
-    solution in that file (please do not rename the file).
-4.  Commit your completed R file into YOUR git repository and push your
-    git branch to the GitHub repository under your account.
-5.  Submit to Coursera the URL to your GitHub repository that contains
-    the completed R code for the assignment.
+$i[[3]]
+NULL
 
-### Grading
+$i[[4]]
+NULL
 
-This assignment will be graded via peer assessment.
+$i[[5]]
+NULL
+
+$i[[6]]
+NULL
+
+$i[[7]]
+NULL
+
+$i[[8]]
+NULL
+
+$i[[9]]
+NULL
+
+$i[[10]]
+NULL
+
+## one_shot function : combine makeCacheMatrix and cacheSolve in one function.
+
+one_shot <- function(x) {
+    mCMx <- makeCacheMatrix(x)
+    i <- cacheSolve(mCMx)
+    cacheSolve(mCMx)
+}
+
+## cacheSolve is used 2 times because the first cacheSolve computes the inverse matrices and the second is used to verify if the result is cached or not.
+## So you can see "getting cached data" message at the bottom.
+> ## compute inverse matrix
+> s$i <- lapply(s$x, one_shot)
+getting cached data
+getting cached data
+getting cached data
+getting cached data
+getting cached data
+getting cached data
+getting cached data
+getting cached data
+getting cached data
+getting cached data
+
+> ## test if the computes are corrent.
+## the result of matrix product x and inverse of x is [1 0; 0 1].
+> for (k in seq_along(s$x)) {
++     print(s$x[[k]] %*% s$i[[k]])
++ }
+     [,1] [,2]
+[1,]    1    0
+[2,]    0    1
+     [,1] [,2]
+[1,]    1    0
+[2,]    0    1
+     [,1] [,2]
+[1,]    1    0
+[2,]    0    1
+             [,1]          [,2]
+[1,] 1.000000e+00 -2.220446e-16
+[2,] 1.110223e-16  1.000000e+00
+              [,1] [,2]
+[1,]  1.000000e+00    0
+[2,] -8.881784e-16    1
+     [,1]          [,2]
+[1,]    1 -1.110223e-16
+[2,]    0  1.000000e+00
+              [,1] [,2]
+[1,]  1.000000e+00    0
+[2,] -8.881784e-16    1
+     [,1] [,2]
+[1,]    1    0
+[2,]    0    1
+              [,1] [,2]
+[1,]  1.000000e+00    0
+[2,] -2.220446e-16    1
+              [,1] [,2]
+[1,]  1.000000e+00    0
+[2,] -5.551115e-17    1
+
+
