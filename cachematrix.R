@@ -25,7 +25,7 @@ makeCacheMatrix <- function(x = matrix()) {
     ## 4. get the inverse matrix of input matrix
     getinv <- function() i_1
 
-    ## return a list containing a function
+    ## return a list containing functions
     list(set = set,
          get = get,
          setinv = setinv,
@@ -47,7 +47,7 @@ cacheSolve <- function(mCM, ...) {
     }
 
     ## if the inverse doesn't exist than compute the invers matrix from data.
-    ## To returns x(the input of makeCacheMatrix), get() looks up the upper environment to find x, lexical scoping.
+    ## To return x(the input of makeCacheMatrix), get() looks up the upper environment to find x, lexical scoping.
     data <- mCM$get()
     i_2 <- solve(data, ...)
 
