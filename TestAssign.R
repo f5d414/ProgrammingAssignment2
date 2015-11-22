@@ -1,4 +1,4 @@
-## s is a list(s) containing 2 lists each for 10 2by2 matrices of x and i.
+## s is a list containing 2 lists each for 10 2by2 matrices of x and i.
 ## x is the list of input matrices for makeCacheMatrix and i is the list of computed inverse matrices. 
 x <- vector("list", 10)
 i <- vector("list", 10)
