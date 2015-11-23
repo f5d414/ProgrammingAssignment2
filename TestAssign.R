@@ -3,7 +3,7 @@
 x <- vector("list", 10)
 i <- vector("list", 10)
 for (k in seq_along(x)) {
-    x[[k]] <- matrix(runif(4, 1, 10), nrow = 2)
+    x[[k]] <- matrix(rnorm(4, 1, 10), nrow = 2)
 }
 s <- list(x = x, i = i)
 s
